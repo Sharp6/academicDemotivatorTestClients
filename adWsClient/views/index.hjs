@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <script src="/javascripts/jquery-2.1.1.min.js"></script>
+    <script src="/javascripts/socket.io.js"></script>
+
+  </head>
+  <body>
+    <h1>{{ title }}</h1>
+    <p>Welcome to {{ title }}</p>
+    <p>
+      <select id="person">
+        <option value="peter">Peter</option>
+        <option value="philip">Philip</option>
+        <option value="gilles">Gilles</option>
+      </select>
+      <button id="button">Insult!</button>
+    </p>
+
+    <script>
+    	var socket = io.connect();
+    	
+			socket.on("incoming insult", function(person) {
+				alert(person + " has been insulted!");
+			});
+
+			$("#button").click(function(){
+        var person = $("#person").val();
+				socket.emit("performInsult", { person: person });
+			});
+    </script>
+  </body>
+</html>
